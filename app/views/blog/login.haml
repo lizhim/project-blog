@@ -1,0 +1,21 @@
+%h2博客
+%div(class="modal hide fade in" style="display:block;Background-color:#F5F5F5" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" )
+  %div(class="modal-header")
+    %h4(style="text-align:left;")登录
+  %div(class="modal-body" style="text-align:center;")
+    =form_for (:user), :method=>'post', :url=>'/blog/validate_account_and_password'  do |f|
+      %div(class="input-prepend")
+        =f.label :"账号",:class=>"add-on",:style=>"height:30px"
+        =f.text_field :account ,:id=>"input",:type=>"text",:style=>"height:30px",:placeholder=>"账号"
+        %br
+        %br
+        =f.label :"密码",:class=>"add-on",:style=>"height:30px"
+        =f.text_field :password ,:id=>"input",:type=>"password",:style=>"height:30px",:placeholder=>"密码"
+        %br
+        %br
+        -if flash[:error]
+          %div(style='font-size:15px;Background-color:#FFC1C1;padding-top:5px;color:red')
+            %p
+              =flash[:error]
+        %br
+        =f.submit "登录"

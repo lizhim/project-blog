@@ -1,0 +1,13 @@
+%h2我的博客
+%p(class="header-right")
+  你好，
+  =@account
+  =link_to "退出"
+.col-md-2
+  .multilevel-nav
+    %ul.nav.nav-pills.nav-stacked
+      %li#_subscribe_auto_reply
+        %a(href="/blog/post")发表文章
+    %ul.nav.nav-pills.nav-stacked
+      %li#_message_auto_reply
+        %a(href="/blog/manager")文章管理
