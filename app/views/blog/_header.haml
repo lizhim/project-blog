@@ -2,8 +2,12 @@
 %p(class="header-right")
   你好，
   =@account
-  =link_to "退出"
-.col-md-2
+  =link_to "退出", blog_logout_path(@account)
+%span
+  =link_to '文章管理', blog_manager_path(@account)
+%span
+  =link_to '发表文章', blog_post_path(@account)
+-#.col-md-2
   .multilevel-nav
     %ul.nav.nav-pills.nav-stacked
       %li#_subscribe_auto_reply

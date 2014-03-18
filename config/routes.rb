@@ -7,6 +7,17 @@ Blog::Application.routes.draw do
 
   get 'blog/manager' => 'blog#manager'
 
+  get 'blog/detail' => 'blog#detail'
+
+  get 'blog/edit' => 'blog#edit'
+
+  delete 'blog/destroy' => 'blog#destroy'
+
+  get 'blog/logout' => 'blog#logout'
+
+  get 'blog/login' => 'blog#login'
+
+  get '/blog/register' =>'blog#register'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

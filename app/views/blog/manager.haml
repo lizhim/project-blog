@@ -4,4 +4,20 @@
     .col-md-10
       .row
         .col-md-10
-
+    %div(style="height:500px;width:1000px;position:absolute;right:10%")
+      %table(class="table table-bordered")
+        %tr(style="text-align:center")
+          %th编号
+          %th标题
+          %th操作
+        -i=0
+        -@current_account.each do |account|
+          %tr
+            -i=i+1
+            %td
+              =i
+            %td
+              =link_to account.title, blog_detail_path(account:@account, title:account.title)
+            %td
+              =link_to "编辑", blog_edit_path(account:@account, title:account.title, essay:account.essay)
+              =link_to "删除", blog_destroy_path(account.account),method: :delete, data: { confirm: '您确定要删除'+account.account+'?' }

@@ -3,6 +3,9 @@
   %div(class="modal-header")
     %h4(style="text-align:left;")登录
   %div(class="modal-body" style="text-align:center;")
+    %div(style="text-align:right;")
+      %p
+        =link_to "用户注册", '/blog/register'
     =form_for (:user), :method=>'post', :url=>'/blog/validate_account_and_password'  do |f|
       %div(class="input-prepend")
         =f.label :"账号",:class=>"add-on",:style=>"height:30px"
