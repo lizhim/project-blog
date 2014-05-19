@@ -1,10 +1,17 @@
-.container
-  .row
-    =render "header"
-    .col-md-10
-      .row
-        .col-md-10
-    %p
-      =@title
-      %br
-      =@essay
+%div(style="background-color: #f5f5f5;height: 70px;")
+  .container
+    .row
+      =render "header"
+      .col-md-9.post-border.post-padding(style='margin-left: 5px;margin-bottom: 20px;')
+        %a(href="" )
+        %h4
+          预览文章：
+          =@title
+          %img(alt='Blog' src="/assets/edit.png" )
+          %img(alt='Blog' src="/assets/delete.png")
+        %p
+          =@update_at
+        %br
+        %br
+        %p
+          =@essay

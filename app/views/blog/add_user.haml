@@ -1,12 +1,12 @@
 %img(alt='Blog' src="/assets/blog.gif" width="150" style="margin-top:10px; margin-left: 200px")
 %div(class="modal hide fade in" style="display:block;Background-color:#F5F5F5;" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" )
   %div(class="modal-header")
-    %h4新用户注册
+    %h4添加用户注册
+    %span(class="header-right" style="margin-right: 70px; margin-top: 20px; ")
+      =link_to "返回用户管理", "/blog/manage_user"
   %div(class="modal-body" style="text-align:center;")
-    %div(style="text-align:right;")
-      =link_to '用户登录', '/blog/login'
     %br
-    =form_for (:user_info), :method=>'post', :url=>'/blog/judge_password_repeat' do |f|
+    =form_for (:user_info), :method=>'post', :url=>'/blog/judge_user_password_repeat' do |f|
       %div(class="input-prepend")
         =f.label :"账号",:class=>"add-on",:style=>"height:30px;width:100px"
         =f.text_field :account ,:type=>"input",:style=>"height:30px;width:300px",:placeholder=>"账号"
@@ -32,4 +32,4 @@
             %p
               =flash[:notice]
         %br
-        =f.submit "注册"
+        =f.submit "添加"

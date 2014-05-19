@@ -1,17 +1,60 @@
-%h2我的博客
-%p(class="header-right")
+%div
+  -#=image_tag(src= 'blog.gif', width:150)
+  %img(alt='Blog' src="/assets/blog.gif" width="150" style="margin-top:10px")
+%p(class="header-right" style="margin-right: 270px; margin-top: 20px; ")
   你好，
   =@account
   =link_to "退出", blog_logout_path(@account)
-%span
-  =link_to '文章管理', blog_manager_path(@account)
-%span
-  =link_to '发表文章', blog_post_path(@account)
--#.col-md-2
+%br
+%br
+.col-md-2.post-border.post-padding
   .multilevel-nav
     %ul.nav.nav-pills.nav-stacked
-      %li#_subscribe_auto_reply
-        %a(href="/blog/post")发表文章
+      %p 文章管理
     %ul.nav.nav-pills.nav-stacked
-      %li#_message_auto_reply
-        %a(href="/blog/manager")文章管理
+      %li#_message_essay
+        %span
+          %img(alt='Blog' src="/assets/all.png")
+        %span
+          %a(href="/blog/manager" style="padding-left: 5px")
+            全部博客(
+            =@all_blog_count
+            )
+    %ul.nav.nav-pills.nav-stacked
+      %li#_script_essay
+        %span
+          %img(alt='Blog' src="/assets/script.png")
+        %span
+          %a(href="/blog/script")
+            草稿箱(
+            =@script_essay_count
+            )
+    %ul.nav.nav-pills.nav-stacked
+      %li#_recycle
+        %span
+          %img(alt='Blog' src="/assets/recycle.png")
+        %span
+          %a(href="/blog/recycle")
+            回收站(
+            =@recycle_essay_count
+            )
+    %ul.nav.nav-pills.nav-stacked
+      %p 博客管理
+    %ul.nav.nav-pills.nav-stacked
+      %li#_post_essay
+        %span
+          %img(alt='Blog' src="/assets/add.png")
+        %span
+          %a(href="/blog/post" style="padding-left: 5px")发表文章
+    %ul.nav.nav-pills.nav-stacked
+      %li#_category_manage
+        %span
+          %img(alt='Blog' src="/assets/sort.png")
+        %span
+          %a(href="/blog/category_manage" style="padding-left: 1px")分类管理
+    %ul.nav.nav-pills.nav-stacked
+      %li
+        %span
+          %img(alt='Blog' src="/assets/comment.png")
+        %span
+          %a(href="#")评论管理

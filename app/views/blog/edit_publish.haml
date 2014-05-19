@@ -8,22 +8,20 @@
             .form-group#title
               %label.col-sm-2(style="padding-left: 10px;margin-bottom: 0;")
                 博客标题
-                %input(type='text' style='width: 500px;margin-left: 5px')
+                %input(type='text' style='width: 500px;margin-left: 5px' value="#{@edited_article.title}")
                 %span.must *
             %br
             .form-group#sort
               %label.col-sm-2(style="padding-left: 10px;margin-bottom: 0;")
                 博客分类
-                %input(type='text' style='width: 500px;margin-left: 5px')
+                %input(type='text' style='width: 500px;margin-left: 5px' value="#{@edited_article.sort}")
             %br
             .form-group#essay
               %label.col-sm-2(style="padding-left: 10px;margin-bottom: 0;")
                 编辑博客内容
                 %hr
               %div(style='margin-left: 10px')
-                %textarea.form-control(rows='20px' style='width: 660px')
+                %textarea#456.form-control(rows='20px' style='width: 660px') #{@edited_article.essay}
             %br
             .form-group(style='text-align: center')
-              %a#save.btn.btn-primary(href='javascript:void(0)' onclick="save_script()") 保存草稿
-              %a#publish.btn.btn-primary(href='javascript:void(0)' onclick="publish()")发布
-
+              %a#publish.btn.btn-primary(href='javascript:void(0)' onclick="edit_publish(#{@article_id})")发布

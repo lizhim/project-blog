@@ -7,7 +7,7 @@
           %form
             .form-group
               %label.col-sm-2(style="padding-left: 10px;margin-bottom: 0;")
-                最新博客文章列表
+                草稿箱文章列表
             %br
             .form-group
               %table.table.table-hover
@@ -16,19 +16,20 @@
                   %th发表时间
                   %th分类
                   %th管理
-                -if @all_blog_of_account.present?
-                  -@all_blog_of_account.each do |account|
-                    %tr(name="tr")
-                      %td(name="title")
+                -if @script_essay_of_account.present?
+                  -@script_essay_of_account.each do |account|
+                    %tr
+                      %td
                         =link_to account.title, blog_detail_path(title:account.title)
                       %td
                         =account.created_at.to_date
-                      %td(name="sort")
+                      %td
                         =account.sort
-                      %td(name="operate")
-                        %a.btn.btn-xs.btn-primary(href="/blog/edit_publish/#{account.id}" ) 编辑
-                        %a.btn.btn-xs.btn-danger(data-toggle="modal" data-target="#delete_publish" onclick="delete_publish(#{account.id})") 删除
-.modal.fade#delete_publish(data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+                      %td
+                        %a.btn.btn-xs.btn-primary(href="/blog/edit_script/#{account.id}" ) 编辑
+                        %a.btn.btn-xs.btn-danger(data-toggle="modal" data-target="#delete_script" onclick="delete_script(#{account.id})") 删除
+
+.modal.fade#delete_script(data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
   .modal-dialog
     .modal-content
       .modal-header
@@ -38,4 +39,4 @@
         %h3.text-center 确定删除此文章吗
       .modal-footer
         %a.btn.btn-default.btn-lg( data-dismiss="modal" href="#") 取消
-        %a.btn.btn-danger.btn-lg( data-dismiss="modal" href="#" onclick="confirm_delete_publish()")删除
+        %a.btn.btn-danger.btn-lg( data-dismiss="modal" href="#" onclick="confirm_delete_script()")删除

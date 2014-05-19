@@ -1,0 +1,32 @@
+.modal.fade#add_user(data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close(type="button" data-dismiss="modal" aria-hidden="true") &times;
+        %h4.modal-title#myModalLabel 确认发送
+      .modal-body.auto-line
+        .form-horizontal
+          .form-group
+            %label.col-sm-2.control-label 短信正文
+            .col-sm-9
+              %p#sms_content.form-control-static
+          .form-group
+            %label.col-sm-2.control-label 发送对象
+            .col-sm-9
+              .form-group#group_item_list
+                .btn-group.btn-group-sms#hidden_group
+                  %span.btn.btn-default.btn-sm.disabled 全部用户
+
+              #bulk_sms_count
+                %span
+                  %strong#actual_count
+                .pull-right
+                  %a#scan_more(href="javascript:{}" hidden="true") &gt;&gt;参看全部
+              %br
+
+              %table.table
+                %tbody#customers_list
+
+      .modal-footer
+        %a.btn.btn-default.btn-lg(href="#" data-dismiss="modal") 取消
+        %a#send_button.btn.btn-primary.btn-lg(href="#" disabled="true" data-dismiss="modal") 发送

@@ -7,6 +7,8 @@ Blog::Application.routes.draw do
 
   get 'blog/manager' => 'blog#manager'
 
+  get 'blog/category_manage' => 'blog#category_manage'
+
   get 'blog/detail' => 'blog#detail'
 
   get 'blog/edit' => 'blog#edit'
@@ -17,7 +19,42 @@ Blog::Application.routes.draw do
 
   get 'blog/login' => 'blog#login'
 
-  get '/blog/register' =>'blog#register'
+  get 'blog/register' =>'blog#register'
+
+  post 'blog/judge_password_repeat' => 'blog#judge_password_repeat'
+
+  get 'blog/manage_user' => 'blog#manage_user'
+
+  post 'blog/destroy_script/:account_id' => 'blog#destroy_script'
+
+  post 'blog/destroy_publish/:account_id' => 'blog#destroy_publish'
+
+  get 'blog/edit_publish/:account_id' => 'blog#edit_publish'
+
+  post  'blog/edit_publish_save' => 'blog#edit_publish_save'
+
+  get 'blog/edit_script/:account_id' => 'blog#edit_script'
+
+  post  'blog/edit_script_save' => 'blog#edit_script_save'
+
+  post 'blog/publish_script' => 'blog#publish_script'
+
+  delete 'blog/destroy_user' => 'blog#destroy_user'
+
+  post 'blog/save_script' => 'blog#save_script'
+
+  post 'blog/publish' => 'blog#publish'
+
+  get 'blog/script' => 'blog#script'
+
+  get 'blog/add_user' => 'blog#add_user'
+
+  post 'blog/judge_user_password_repeat' => 'blog#judge_user_password_repeat'
+
+  get 'blog/recycle' => 'blog#recycle'
+
+  #get 'blog/model' => 'blog#model'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -1,0 +1,31 @@
+%div(style="background-color: #f5f5f5;height: 70px;")
+  .container
+    .row
+    %img(alt='Blog' src="/assets/blog.gif" width="150" style="margin-top:10px")
+    %p(class="header-right" style="margin-right: 195px; margin-top: 20px; ")
+      你好，
+      =@account
+      =link_to "退出", blog_logout_path(@account)
+  %br
+  %div(style="height:500px;width:950px;margin-left:205px;")
+    %table.table.table-hover
+      %div(style="Background-color:#F5F5F5")
+        用户管理
+        .btn
+          =link_to "+添加用户", '/blog/add_user'
+        -#%a.btn.btn-primary(href="" data-toggle="modal" data-target="#add_user") +添加用户
+      %tr
+        %th编号
+        %th用户名
+        %th管理
+      -@user.each_with_index do |user,index|
+        %tr
+          %td
+            =index
+          %td
+            =user.account
+          %td
+            =link_to "删除", blog_destroy_user_path(user.id),method: :delete, data: { confirm: '您确定要删除'+user.account + '?' }
+            -#=link_to "修改密码", manager_manager_modify_password_path(user.name)
+      %div(style="position:absolute;top:90%;right:10%")
+        = will_paginate @user,:previous_label=> '上一页',:next_label=> '下一页'
