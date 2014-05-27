@@ -4,6 +4,8 @@
     %h4新用户注册
   %div(class="modal-body" style="text-align:center;")
     %div(style="text-align:right;")
+      =link_to "首页", '/'
+      &nbsp;
       =link_to '用户登录', '/blog/login'
     %br
     =form_for (:user_info), :method=>'post', :url=>'/blog/judge_password_repeat' do |f|

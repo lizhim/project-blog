@@ -21,11 +21,11 @@
       -@user.each_with_index do |user,index|
         %tr
           %td
-            =index
+            =index+1
           %td
             =user.account
           %td
             =link_to "删除", blog_destroy_user_path(user.id),method: :delete, data: { confirm: '您确定要删除'+user.account + '?' }
-            -#=link_to "修改密码", manager_manager_modify_password_path(user.name)
+            =link_to "修改密码"
       %div(style="position:absolute;top:90%;right:10%")
         = will_paginate @user,:previous_label=> '上一页',:next_label=> '下一页'

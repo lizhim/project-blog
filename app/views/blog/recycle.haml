@@ -28,18 +28,18 @@
                       %td(name="sort")
                         =account.sort
                       %td(name="operate")
-                        %a(href="/blog/")
+                        %a(href="#" onclick="blog_restore(#{account.id})")
                           %img(alt='Blog' src="/assets/restore.png")
-                        %a(data-toggle="modal" data-target="#delete_script" onclick="delete_script(#{account.id}")
+                        %a(data-toggle="modal" data-target="#delete_recycle" onclick="delete_recycle(#{account.id})")
                           %img(alt='Blog' src="/assets/delete.png")
-.modal.fade#delete_script(data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+.modal.fade#delete_recycle(data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
   .modal-dialog
     .modal-content
       .modal-header
         %button.close(aria-hidden="true" data-dismiss="modal" type="button")×
         %h4.modal-title#myModalLabel 提示
       .modal-body
-        %h3.text-center 确定删除此文章吗
+        %h3.text-center 该文章将永久删除，确定删除此文章吗
       .modal-footer
         %a.btn.btn-default.btn-lg( data-dismiss="modal" href="#") 取消
-        %a.btn.btn-danger.btn-lg( data-dismiss="modal" href="#" onclick="confirm_delete_script()")删除
+        %a.btn.btn-danger.btn-lg( data-dismiss="modal" href="#" onclick="confirm_delete_recycle()")删除

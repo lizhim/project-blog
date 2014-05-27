@@ -12,9 +12,9 @@
             .form-group
               %label.col-sm-2(style="padding-left: 10px;margin-bottom: 0;")
                 新增博文分类：
-                %input(type='text' style='width: 400px; height: 30px')
+                %input#category_input(type='text' style='width: 400px; height: 30px')
                 %span
-                  %a.btn.btn-primary(href='javascript:void(0)')提交
+                  %a.btn.btn-primary(href='javascript:void(0)' onclick="add_category()")提交
             %br
             .form-group(style='text-align: center')
               %table.table.table-hover
@@ -22,19 +22,45 @@
                   %th名称
                   %th文章数量
                   %th管理
-                  %th排序
+                  -#%th排序
                 -if @category.present?
                   -@category.each do |category|
                     %tr
                       %td
                         =category[0]
                       %td
-                        =category[1]
+                        =fetch_category_count(category[0])
                       %td
-                        =link_to "编辑"
-                        -#=link_to "删除", blog_destroy_path(account.title),method: :delete, data: { confirm: '您确定要删除'+category[0] + '?' }
-                      %td
-                        %a(href="javascript:{}")
-                          %i.arrow-up
-                        %a(href="javascript:{}")
-                          %i.arrow-down
+                        %a.btn.btn-xs.btn-primary(data-toggle="modal"  data-target="#edit_category" onclick="edit_category(#{category[0]})") 编辑
+                        %a.btn.btn-xs.btn-danger(data-toggle="modal" data-target="#delete_category" onclick="delete_category(#{category[0]})") 删除
+                      -#%td
+                      -#  %a(href="javascript:{}")
+                      -#    %i.arrow-up
+                      -#  %a(href="javascript:{}")
+                      -#    %i.arrow-down
+
+.modal.fade#delete_category(data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close(aria-hidden="true" data-dismiss="modal" type="button")×
+        %h4.modal-title#myModalLabel 提示
+      .modal-body
+        %h3.text-center 确定删除此分类吗
+      .modal-footer
+        %a.btn.btn-default.btn-lg( data-dismiss="modal" href="#") 取消
+        %a.btn.btn-danger.btn-lg( data-dismiss="modal" href="#" onclick="confirm_delete_category()")删除
+.modal.fade#edit_category(data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close(type="button" data-dismiss="modal" aria-hidden="true") &times;
+        %h4#myModalLabel.modal-title 编辑分类
+      .modal-body
+        .form-horizontal
+          .form-group
+            %label.col-sm-2.control-label 分类
+            %input#edit_category_input(style="margin-left: -90px;")
+      .modal-footer
+        %a.btn.btn-default.btn-lg(href="#" data-dismiss="modal")取消
+        %a#next_step.btn.btn-primary.btn-lg(href="javascript:void(0)" data-dismiss="modal" data-toggle="modal" onclick="save_category()") 保存

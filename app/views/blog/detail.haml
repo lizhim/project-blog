@@ -11,6 +11,11 @@
           %img(alt='Blog' src="/assets/delete.png")
         %p
           =@update_at
+        -if @sort.present?
+          %p
+            %strong
+              博客分类：
+            =@sort
         %br
         %br
         %p

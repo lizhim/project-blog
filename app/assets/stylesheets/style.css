@@ -894,3 +894,59 @@
     font-size: 0;
     line-height: 5;
 }
+
+.i-search{
+    width: 493px;
+    height: 35px;
+    border: 3px solid #ff3333;
+    margin-left: 24%;
+    margin-right: 24%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.i-search .input{
+    float: left;
+    width: 410px;
+    height: 28px;
+    border: 1px #ff3333;
+}
+.i-search .button{
+    float: right;
+    width: 77px;
+    height: 34px;
+    Background-color: #ff3333;
+    margin-left: -4px;
+    margin-top: -3px;
+    border: 1px #ff3333;
+    color:white;
+    font-weight:bold;
+}
+
+.td-character-show {
+    width:950px;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    overflow:hidden;
+}
+
+.time_display{
+    color: #08c;
+    border-right: 2px solid #08c;
+    padding-right: 4px;
+}
+
+.scan_display {
+    color: #08c;
+    border-right: 2px solid #08c;
+    padding-right: 4px;
+    padding-left: 4px
+}
+
+.sort {
+    color: #08c;
+    padding-left: 4px
+}
+
+.content {
+    color: #08c;
+}

@@ -1,0 +1,19 @@
+%div(style="background-color: #f5f5f5;height: 70px;")
+  .container
+    .row
+      %div(class="header-right" style="margin-right: 270px; margin-top: 20px; ")
+        %span(style="color: #E28822; border-right: 2px solid #ccc; padding-right: 4px;") 您还未登录！
+        %span(style="border-right: 2px solid #ccc; padding-right: 4px;padding-left: 4px")
+          =link_to "登录", 'blog/login'
+        %span(style="padding-left: 4px")
+          =link_to "注册", 'blog/register'
+.container(style="margin-top: 20px")
+  -#=image_tag(src= 'blog.gif', width:150)
+  %img(alt='Blog' src="/assets/blog.gif" width="230" style="margin-top:10px;margin-left:35%;margin-right:35%")
+  .i-search.i-search-border
+    .form
+      %input.input#search_input(type="text")
+      %input.button#search_button(type="button" value="搜索" onclick="search_blog()")
+  %br
+  #search_info
+

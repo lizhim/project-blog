@@ -22,8 +22,12 @@ class BlogController < ApplicationController
       redirect_to "/blog/manage_user"
     else
       session[:account] = user[:account]
-      redirect_to "/blog/manager"
+      redirect_to "/blog/login_home"
     end
+  end
+
+  def login_home
+    @account = session[:account]
   end
 
   def register
@@ -95,6 +99,7 @@ class BlogController < ApplicationController
     account = params[:account]
     account_id = UserInfo.find_by(account: account).id
     Article.find_by(id: params[:article_id]).update_attributes(title: params[:title], sort: params[:sort], essay: params[:essay])
+    Categroy.save_sort_of_user(account_id, params[:article_id], params[:sort])
     render :text => 'ok', :status => 200
   end
 
@@ -113,7 +118,8 @@ class BlogController < ApplicationController
     @account = session[:account]
     account = UserInfo.find_by(:account => @account)
     @all_blog_of_account = Article.where(:user_id => account[:id], :status => 'publish')
-    @category = @all_blog_of_account.group('sort').count
+    #@category = @all_blog_of_account.group('sort').count
+    @category = Categroy.where(:user_id => account[:id]).order('created_at DESC').group('sort').count
     @script_essay_of_account = Article.where(:user_id => account[:id], :status => 'script')
     @recycle_essay = Article.where(:user_id => account[:id], :status => 'recycle').order('created_at DESC')
     @recycle_essay_count = @recycle_essay.count
@@ -133,6 +139,7 @@ class BlogController < ApplicationController
     @title = params[:title]
     @update_at = Article.find_by(:user_id => account.id, :title => @title).updated_at.to_date
     @essay = Article.find_by(user_id:account.id, title:@title).essay
+    @sort = Article.find_by(user_id:account.id, title:@title).sort
   end
 
   def edit
@@ -156,6 +163,7 @@ class BlogController < ApplicationController
     @account = session[:account]
     Article.find_by(id: params['account_id']).update_attributes(status: 'recycle')
     account = UserInfo.find_by(:account => @account)
+    Categroy.find_by(:article_id => params['account_id']).destroy
     @all_blog_of_account = Article.where(:user_id => account[:id], :status => 'publish')
     @script_essay_of_account = Article.where(:user_id => account[:id], :status => 'script')
     @recycle_essay = Article.where(:user_id => account[:id], :status => 'recycle').order('created_at DESC')
@@ -195,7 +203,8 @@ class BlogController < ApplicationController
     account = params[:account]
     account_id = UserInfo.find_by(account: account).id
     if params[:title]!= ''
-      Article.save_publish_blog_of_user(account_id, params)
+      article = Article.save_publish_blog_of_user(account_id, params)
+      Categroy.save_sort_of_user(account_id, article.id, params[:sort])
       script_count = Article.fetch_count_of_script(account_id, 'publish')
       render :text=> script_count
     end
@@ -253,6 +262,7 @@ class BlogController < ApplicationController
     account = params[:account]
     account_id = UserInfo.find_by(account: account).id
     Article.find_by(id: params[:article_id]).update_attributes(title: params[:title], sort: params[:sort], essay: params[:essay], status: 'publish', created_at: Time.now)
+    Categroy.save_sort_of_user(account_id, params[:article_id], params[:sort])
     render :text => 'ok', :status => 200
   end
 
@@ -267,8 +277,76 @@ class BlogController < ApplicationController
     @script_essay_count =  @script_essay_of_account.count
   end
 
+  def destroy_recycle
+    @account = session[:account]
+    Article.find_by(id: params['account_id']).destroy
+    account = UserInfo.find_by(:account => @account)
+    @all_blog_of_account = Article.where(:user_id => account[:id], :status => 'publish')
+    @script_essay_of_account = Article.where(:user_id => account[:id], :status => 'script')
+    @recycle_essay = Article.where(:user_id => account[:id], :status => 'recycle').order('created_at DESC')
+    @recycle_essay_count = @recycle_essay.count
+    @all_blog_count = @all_blog_of_account.count
+    @script_essay_count =  @script_essay_of_account.count
+    render '/blog/recycle'
+  end
+
+  def restore
+    @account = session[:account]
+    Article.find_by(id: params['account_id']).update_attributes(status: 'publish')
+    account = UserInfo.find_by(:account => @account)
+    article = Article.find_by(id: params['account_id'])
+    Categroy.save_sort_of_user(account.id, params['account_id'], article.sort)
+    @all_blog_of_account = Article.where(:user_id => account[:id], :status => 'publish')
+    @script_essay_of_account = Article.where(:user_id => account[:id], :status => 'script')
+    @recycle_essay = Article.where(:user_id => account[:id], :status => 'recycle').order('created_at DESC')
+    @recycle_essay_count = @recycle_essay.count
+    @all_blog_count = @all_blog_of_account.count
+    @script_essay_count =  @script_essay_of_account.count
+    render '/blog/recycle'
+  end
+
+  def add_category
+    @account = session[:account]
+    article_id = nil
+    account = UserInfo.find_by(:account => @account)
+    Categroy.save_sort_of_user(account.id, article_id, params['category_name'])
+    render '/blog/category_manage'
+  end
+
+  def delete_category
+    @account = session[:account]
+    account = UserInfo.find_by(:account => @account)
+    Categroy.where(:user_id => account.id, :sort => params[:sort]).delete_all
+    render '/blog/category_manage'
+  end
+
+  def edit_category
+    @account = session[:account]
+    account = UserInfo.find_by(:account => @account)
+    Categroy.where(:user_id => account.id, :sort => params[:old_category]).each do |c|
+      c.update_attributes(sort: params[:new_category])
+    end
+    Article.where(:user_id => account.id, :sort => params[:old_category]).each do |c|
+      c.update_attributes(sort: params[:new_category])
+    end
+    render '/blog/category_manage'
+  end
+
+  def search
+    content=params['content']
+    @search = Article.where("status='publish' and title like '%#{content}%'")
+    @search.each do |s|
+      s.update_attributes(created_at: s.created_at)
+    end
+    render :json => @search
+  end
+
+  def home
+     @display = []
+  end
+
   private
   def user_params
-    params.require(:user_info).permit(:account, :password, :password_confirmation, :question, :answer)
+    params.require(:user_info).permit(:account, :password, :password_confirmation, :question, :answer, :admin)
   end
 end

@@ -1,5 +1,7 @@
 Blog::Application.routes.draw do
-  root 'blog#login'
+  root 'blog#home'
+
+  #root 'blog#login'
 
   post 'blog/validate_account_and_password' => 'blog#validate_account_and_password'
 
@@ -19,6 +21,8 @@ Blog::Application.routes.draw do
 
   get 'blog/login' => 'blog#login'
 
+  get 'blog/login_home' => 'blog#login_home'
+
   get 'blog/register' =>'blog#register'
 
   post 'blog/judge_password_repeat' => 'blog#judge_password_repeat'
@@ -28,6 +32,8 @@ Blog::Application.routes.draw do
   post 'blog/destroy_script/:account_id' => 'blog#destroy_script'
 
   post 'blog/destroy_publish/:account_id' => 'blog#destroy_publish'
+
+  post 'blog/destroy_recycle/:account_id' => 'blog#destroy_recycle'
 
   get 'blog/edit_publish/:account_id' => 'blog#edit_publish'
 
@@ -52,6 +58,16 @@ Blog::Application.routes.draw do
   post 'blog/judge_user_password_repeat' => 'blog#judge_user_password_repeat'
 
   get 'blog/recycle' => 'blog#recycle'
+
+  post 'blog/restore/:account_id' => 'blog#restore'
+
+  post 'blog/search' => 'blog#search'
+
+  post 'blog/add_category' => 'blog#add_category'
+
+  delete 'blog/delete_category' => 'blog#delete_category'
+
+  post 'blog/edit_category' => 'blog#edit_category'
 
   #get 'blog/model' => 'blog#model'
 
